@@ -30,9 +30,7 @@ describe('CheckBox Angular verification', () => {
 
     it('should Uncheck the checkbox “Angular” ', async () => {
         await CheckBoxPage.checkBoxAngular.click();
-        await expect(CheckBoxPage.displayResult).not.toBeDisplayed();
-        await browser.pause(10000);
-
+        await expect(CheckBoxPage.checkBoxAngular).not.toBeChecked();
     });
 
 });

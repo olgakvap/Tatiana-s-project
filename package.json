@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "npx wdio config/chrome.wdio.conf.js --spec",
+        "wdio": "wdio run wdio.conf.js",
         "report": "allure generate --clean",
         "clean": "rm -rf allure-results && rm -rf allure-report"
     },
