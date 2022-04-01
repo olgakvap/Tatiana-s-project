@@ -22,7 +22,15 @@ describe(' Verify the alert pop up has appeared', () => {
 
     it('Should click on the “On button click, alert will appear after 5 seconds” button ', async () => {
         await AlertsPage.btnTimerAlert.click();
-        await browser.pause(6000);
+        //await browser.pause(6000);
+        await browser.waitUntil(
+            async () => await browser.isAlertOpen() === true,
+            {
+                timeout: 5000,
+                timeoutMsg: 'expected text to be different after 5s'
+            }
+        );
+
         let alertOpen = await browser.isAlertOpen();
         await expect(alertOpen).toEqual(true);
     });
