@@ -2,14 +2,12 @@ const Page = require('./page');
 
 class AlertsWindowsPage extends Page {
 
-    get checkBoxMenu() {
-        return $("//span[text()='Check Box']/..");
-    }
-
     get alertsTitle() {
         return $(".main-header");
     }
-
+    get alertsMenu() {
+        return $("//span[text()='Alerts']/..");
+    }
     open() {
         return super.open('/');
     }

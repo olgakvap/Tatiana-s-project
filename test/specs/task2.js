@@ -1,38 +1,42 @@
 const HomePage = require('../pageobjects/home.page');
-const ElementsPage = require('../pageobjects/elements.page');
-const CheckBoxPage = require('../pageobjects/checkBox.page');
+const AlertsPage = require('../pageobjects/alerts.page');
 const AlertsWindowsPage = require('../pageobjects/alertsWindows.page');
 
-describe('Verify the alert pop up has appeared', () => {
-    it('should Select “Alerts, Frame, & Windows” tile', async () => {
-        await HomePage.open();
+describe(' Verify the alert pop up has appeared', () => {
+    before('Maximize window',  async () => {
         await browser.maximizeWindow();
+    });
+
+    it('Should Select “Alerts, Frame, & Windows” tile', async () => {
+        await HomePage.open();
         await HomePage.alertTile.scrollIntoView();
         await HomePage.alertTile.click();
         await expect(AlertsWindowsPage.alertsTitle).toHaveText('Alerts, Frame & Windows');
     });
 
-    it('should select the “Check Box”', async () => {
-        await ElementsPage.checkBoxMenu.scrollIntoView();
-        await ElementsPage.checkBoxMenu.click();
-        await expect(CheckBoxPage.checkBoxTitle.toHaveText('Check Box'));
-    });
-    it('should expand the folder tree using the “+” button”', async () => {
-        await CheckBoxPage.btnPlus.click();
-        await expect(CheckBoxPage.checkBoxAngular.toBeDisplayed());
+    it('Should Select the “Alerts” option from the side menu”', async () => {
+        await AlertsWindowsPage.alertsMenu.scrollIntoView();
+        await AlertsWindowsPage.alertsMenu.click();
+        await expect(AlertsPage.alertsTitle.toHaveText('Alerts'));
     });
 
-    it('should select the checkbox “Angular” ', async () => {
-        await CheckBoxPage.checkBoxAngular.scrollIntoView();
-        await CheckBoxPage.checkBoxAngular.click();
-        const text = await CheckBoxPage.displayResult.getText();
-        await expect(text).toEqual('angular');
+    it('Should click on the “On button click, alert will appear after 5 seconds” button ', async () => {
+        await AlertsPage.btnTimerAlert.click();
+        await browser.pause(6000);
+        let alertOpen = await browser.isAlertOpen();
+        await expect(alertOpen).toEqual(true);
     });
 
-    it('should Uncheck the checkbox “Angular” ', async () => {
-        await CheckBoxPage.checkBoxAngular.click();
-        await expect(CheckBoxPage.checkBoxAngular).not.toBeChecked();
+    it('Should verify the alert pop up has appeared with expected message', async () => {
+        let alertMessage = await browser.getAlertText();
+        await expect(alertMessage).toEqual('This alert appeared after 5 seconds');
     });
 
+    it('Should close the alert', async () => {
+        await browser.acceptAlert();
+        let alertOpen = await browser.isAlertOpen();
+        await expect(alertOpen).toEqual(false);
+    });
 });
+
 
