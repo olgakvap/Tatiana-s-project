@@ -26,7 +26,8 @@
         "@wdio/mocha-framework": "^7.19.2",
         "@wdio/spec-reporter": "^7.19.1",
         "chromedriver": "^99.0.0",
-        "wdio-chromedriver-service": "^7.3.2"
+        "wdio-chromedriver-service": "^7.3.2",
+        "wdio-wait-for": "^2.2.5"
     },
     "dependencies": {
         "@wdio/allure-reporter": "^7.19.1",
