@@ -24,15 +24,19 @@ describe(' Verify the alert pop up has appeared', () => {
         await AlertsPage.btnTimerAlert.click();
         //await browser.pause(6000);
         await browser.waitUntil(
-            async () => await browser.isAlertOpen() === true,
+            async () => {
+                let alertOpen = await browser.isAlertOpen();
+                return alertOpen === true;
+            },
             {
                 timeout: 5000,
                 timeoutMsg: 'expected text to be different after 5s'
             }
         );
 
-        let alertOpen = await browser.isAlertOpen();
-        await expect(alertOpen).toEqual(true);
+
+        // let alertOpen = await browser.isAlertOpen();
+        // await expect(alertOpen).toEqual(true);
     });
 
     it('Should verify the alert pop up has appeared with expected message', async () => {
